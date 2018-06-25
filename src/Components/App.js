@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import '../Style/App.css';
 import TodoView from './TodoView';
@@ -11,6 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Title from './Title';
 import TodoForm from './TodoForm';
 import clearAll from '../Images/clear-all.svg';
+import happy from '../Images/happy.svg';
 
 const styles = {
   card: {
@@ -26,6 +26,7 @@ class App extends Component {
     this.state = {
       todoList: [],
       inputValue: '',
+      completedTasks: 0,
     }
     this.__handleChange = this.__handleChange.bind(this);
     this.__storeValue = this.__storeValue.bind(this);
@@ -55,17 +56,35 @@ class App extends Component {
   };
   __handleChangeChecked(value, id){
     const updateList = this.state.todoList;
+    const completedTasks = this.state.completedTasks;
+    let counter = 0;
     let selectedObj = updateList.find(function (obj) { return obj.key === id; })
     selectedObj.checkedValue = !value;
+    updateList.reduce((id, thing) => {
+      if (thing.checkedValue) {
+        counter = counter + 1;
+      }
+    }, []);
     this.setState({
       todoList: updateList,
+      completedTasks: counter,
     })
   };
   __removeTodo(id){
+    const completedTasks = this.state.completedTasks;
+    let counter = 0;
     const updateList = this.state.todoList.filter((todo) => {
       if(todo.key !== id) return todo;
     });
-    this.setState({todoList: updateList});
+    updateList.reduce((id, thing) => {
+      if (thing.checkedValue) {
+        counter = counter + 1;
+      }
+    }, []);
+    this.setState({
+      todoList: updateList,
+      completedTasks: counter,
+    });
   }
   __clearAll(){
     this.setState({
@@ -73,20 +92,21 @@ class App extends Component {
     })
   }
   render() {
-    const { todoList, inputValue } = this.state;
+    const { todoList, inputValue, completedTasks } = this.state;
     let renderList = todoList.map((item) => {
       return <TodoView key={item.key} todoValue={item.content} checkedValue={item.checkedValue} unique={item.key}
       handleChange={this.__handleChangeChecked.bind(this,item.checkedValue,item.key)} removeTodo={this.__removeTodo.bind(this,item.key)}/>
     })
     return (
     <div className="App">
-      <Title />
+      <Title heading="Todo"/>
         <Card style={styles.card}>
           <CardContent>
             <TodoForm placeholderText="New Todo" inputValue={inputValue} handleChange={this.__handleChange} addTodo={this.__storeValue} />
               {
                 todoList.length > 0 ?
                 <div>
+                  <p>{completedTasks} \ {todoList.length}</p>
                   <FormGroup>
                     {renderList}
                   </FormGroup>
@@ -96,7 +116,8 @@ class App extends Component {
                 </Button>
               </CardActions>
               </div>:
-              <div>
+              <div className="App-Empty">
+                <img src={happy} />
                 <p>Nothing to do! </p>
               </div>     
             }
