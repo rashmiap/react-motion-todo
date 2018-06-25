@@ -56,13 +56,12 @@ class App extends Component {
     })
   };
   __handleChangeChecked(value, id){
-    console.log(value);
-    console.log(id);
     const updateList = this.state.todoList;
-    //updateList[0].checkedValue = !value;
-    // this.setState({
-    //   todoList: updateList,
-    // })
+    let selectedObj = updateList.find(function (obj) { return obj.key === id; })
+    selectedObj.checkedValue = !value;
+    this.setState({
+      todoList: updateList,
+    })
   };
   __removeTodo(id){
     const updateList = this.state.todoList.filter((todo) => {
