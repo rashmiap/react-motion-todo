@@ -21,3 +21,10 @@ const TodoForm = ({addTodo, placeholderText, inputValue, handleChange}) => {
 };
 
 export default TodoForm;
+
+TodoForm.propTypes = {
+  placeholderText: PropTypes.string,
+  inputValue: PropTypes.string,
+  addTodo: PropTypes.func,
+  handleChange: PropTypes.func,
+}
