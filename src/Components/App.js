@@ -106,7 +106,7 @@ class App extends Component {
               {
                 todoList.length > 0 ?
                 <div>
-                  <p>{completedTasks} \ {todoList.length}</p>
+                  <p>{completedTasks} / {todoList.length}</p>
                   <FormGroup>
                     {renderList}
                   </FormGroup>
