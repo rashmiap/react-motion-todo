@@ -17,10 +17,10 @@ const styles = {
   }
 };
 
-const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo, unique}) => {
+const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo, unique, styleObject}) => {
   let input;
   return (
-    <div style={styles.view}>
+    <div style={Object.assign(styleObject,styles.view)}>
           <FormControlLabel
             control={
               <Checkbox
@@ -45,4 +45,5 @@ TodoView.propTypes = {
 	checkedValue: PropTypes.bool,
 	handleChange: PropTypes.func,
   removeTodo: PropTypes.func,
+  styleObject: PropTypes.object,
 }
