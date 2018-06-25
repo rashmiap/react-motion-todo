@@ -11,6 +11,7 @@ import Title from './Title';
 import TodoForm from './TodoForm';
 import clearAll from '../Images/clear-all.svg';
 import happy from '../Images/happy.svg';
+import { Motion, spring } from 'react-motion';
 
 const styles = {
   card: {
@@ -20,6 +21,17 @@ const styles = {
     margin: '0 auto'
   }
 };
+const initialStyle = {
+    x: 0,
+    opacity: 1,
+}
+
+const finalStyle = {
+    x: spring(window.innerWidth, {
+        stiffness: 20,
+    }),
+    opacity: spring(1),
+}
 class App extends Component {
   constructor(props){
     super(props);
@@ -27,10 +39,15 @@ class App extends Component {
       todoList: [],
       inputValue: '',
       completedTasks: 0,
+      dismissed: false,
     }
     this.__handleChange = this.__handleChange.bind(this);
     this.__storeValue = this.__storeValue.bind(this);
     this.__clearAll = this.__clearAll.bind(this);
+  }
+  componentDidMount(){
+    console.log(finalStyle.x.damping);
+        console.log(finalStyle.x.val);
   }
   __storeValue(event){
     if (event.key === 'Enter') {
@@ -41,6 +58,7 @@ class App extends Component {
       };
       this.setState({
         inputValue: '',
+        dismissed: false,
       })
       this.setState((prevState) =>{
       return{
@@ -68,6 +86,7 @@ class App extends Component {
     this.setState({
       todoList: updateList,
       completedTasks: counter,
+      a: false,
     })
   };
   __removeTodo(id){
@@ -87,15 +106,27 @@ class App extends Component {
     });
   }
   __clearAll(){
+
     this.setState({
-      todoList: [],
+      dismissed: true,
+      completedTasks: 0,
+      //todoList: [],
     })
   }
   render() {
-    const { todoList, inputValue, completedTasks } = this.state;
+    const { todoList, inputValue, completedTasks, dismissed } = this.state;
     let renderList = todoList.map((item) => {
-      return <TodoView key={item.key} todoValue={item.content} checkedValue={item.checkedValue} unique={item.key}
-      handleChange={this.__handleChangeChecked.bind(this,item.checkedValue,item.key)} removeTodo={this.__removeTodo.bind(this,item.key)}/>
+      return <Motion defaultStyle={initialStyle}
+                            style={dismissed? finalStyle : initialStyle }
+                            key={item.key}>
+                        {
+                                (interpolatedStyle) => (
+                        <TodoView key={item.key} todoValue={item.content} checkedValue={item.checkedValue} unique={item.key} styleObject={{
+                                            transform: `translateX(${interpolatedStyle.x}px)`,
+                                            opacity: interpolatedStyle.opacity
+                                        }} handleChange={this.__handleChangeChecked.bind(this,item.checkedValue,item.key)} removeTodo={this.__removeTodo.bind(this,item.key)}/>
+      )}
+      </Motion>
     })
     return (
     <div className="App">
@@ -112,12 +143,12 @@ class App extends Component {
                   </FormGroup>
                    <CardActions>
                 <Button size="small" onClick={this.__clearAll} style={styles.clear}>
-                  <img src={clearAll} />
+                  <img src={clearAll} alt="clear all" />
                 </Button>
               </CardActions>
               </div>:
               <div className="App-Empty">
-                <img src={happy} />
+                <img src={happy} alt="face happy"/>
                 <p>Nothing to do! </p>
               </div>     
             }
