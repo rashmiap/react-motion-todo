@@ -50,7 +50,7 @@ class App extends Component {
         console.log(finalStyle.x.val);
   }
   __storeValue(event){
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.target.value.length > 0) {
       let newItem= {
         key: Date.now(),
         content: event.target.value,
