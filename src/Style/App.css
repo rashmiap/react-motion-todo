@@ -6,3 +6,12 @@
   align-items: center;
   justify-content: flex-start;
 }
+.App-Empty{
+	display: flex;
+    flex-direction: column;
+    padding: 1em;
+    align-items: center;
+}
+.App-Empty img{
+	width: 4em;
+}
