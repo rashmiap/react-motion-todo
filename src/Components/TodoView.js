@@ -5,11 +5,22 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+import deleteButton from '../Images/delete.svg';
+
+const styles = {
+  view: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    marginLeft: 'auto',
+  }
+};
 
 const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo, unique}) => {
   let input;
   return (
-    <div>
+    <div style={styles.view}>
           <FormControlLabel
             control={
               <Checkbox
@@ -20,8 +31,8 @@ const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo
             }
             label={todoValue}
           />
-        <Button size="small" onClick={() => removeTodo(unique)}>
-         X
+        <Button size="small" onClick={() => removeTodo(unique)} style={styles.button}>
+          <img src={deleteButton} />
       	</Button>
     </div>
   );
