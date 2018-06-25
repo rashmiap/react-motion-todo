@@ -10,28 +10,26 @@ import TodoView from './TodoView';
 import FormGroup from '@material-ui/core/FormGroup';
 import Title from './Title';
 import TodoForm from './TodoForm';
+import clearAll from '../Images/clear-all.svg';
 
 const styles = {
   card: {
     minWidth: 400,
   },
+  clear: {
+    margin: '0 auto'
+  }
 };
-
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todoList: [{
-        key: 322,
-        content: 'Buy neha a present',
-        checkedValue: true,
-      }],
+      todoList: [],
       inputValue: '',
     }
     this.__handleChange = this.__handleChange.bind(this);
     this.__storeValue = this.__storeValue.bind(this);
-    //this.__handleChangeChecked = this.__handleChangeChecked.bind(this);
-    //this.__removeTodo = this.__removeTodo.bind(this);
+    this.__clearAll = this.__clearAll.bind(this);
   }
   __storeValue(event){
     if (event.key === 'Enter') {
@@ -69,6 +67,11 @@ class App extends Component {
     });
     this.setState({todoList: updateList});
   }
+  __clearAll(){
+    this.setState({
+      todoList: [],
+    })
+  }
   render() {
     const { todoList, inputValue } = this.state;
     let renderList = todoList.map((item) => {
@@ -78,20 +81,29 @@ class App extends Component {
     return (
     <div className="App">
       <Title />
-      <Card style={styles.card}>
-        <CardContent>
-          <TodoForm placeholderText="New Todo" inputValue={inputValue} handleChange={this.__handleChange} addTodo={this.__storeValue} />
-          <FormGroup>
-          {renderList}
-          </FormGroup>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Clear-all</Button>
-        </CardActions>
-      </Card>
+        <Card style={styles.card}>
+          <CardContent>
+            <TodoForm placeholderText="New Todo" inputValue={inputValue} handleChange={this.__handleChange} addTodo={this.__storeValue} />
+              {
+                todoList.length > 0 ?
+                <div>
+                  <FormGroup>
+                    {renderList}
+                  </FormGroup>
+                   <CardActions>
+                <Button size="small" onClick={this.__clearAll} style={styles.clear}>
+                  <img src={clearAll} />
+                </Button>
+              </CardActions>
+              </div>:
+              <div>
+                <p>Nothing to do! </p>
+              </div>     
+            }
+          </CardContent>
+        </Card>
     </div>
     );
   }
 }
-
 export default App;
