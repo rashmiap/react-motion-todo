@@ -11,27 +11,30 @@ const styles = {
   view: {
     display: 'flex',
     alignItems: 'center',
+    boxShadow: '0 2px 32px -9px rgba(0,0,0,0.52)',
+    padding: '5px 10px',
+    marginBottom: '8px'
   },
   button: {
     marginLeft: 'auto',
-  }
+  },
 };
 
-const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo, unique, styleObject}) => {
+const TodoView = ({checkedValue, todoValue, inputValue, handleChange, removeTodo, uniqueKey, styleObject}) => {
   let input;
   return (
-    <div style={Object.assign(styleObject,styles.view)}>
+    <div style={Object.assign(styleObject,styles.view)} className="listView">
           <FormControlLabel
             control={
               <Checkbox
                 checked={checkedValue}
-                onChange={() => handleChange(checkedValue, unique)}
+                onChange={() => handleChange(checkedValue, uniqueKey)}
                 value={inputValue}
-              />
-            }
+              />}
             label={todoValue}
+            className={checkedValue ? 'listView-checked':''}
           />
-        <Button size="small" onClick={() => removeTodo(unique)} style={styles.button}>
+        <Button size="small" onClick={() => removeTodo(uniqueKey)} style={styles.button} className="listView-delete" >
           <img src={deleteButton} />
       	</Button>
     </div>

@@ -15,7 +15,9 @@ import { Motion, spring } from 'react-motion';
 
 const styles = {
   card: {
-    minWidth: 400,
+    width: 400,
+    marginBottom: '40px',
+    overflow: 'unset',
   },
   clear: {
     margin: '0 auto'
@@ -27,10 +29,8 @@ const initialStyle = {
 }
 
 const finalStyle = {
-    x: spring(window.innerWidth, {
-        stiffness: 20,
-    }),
-    opacity: spring(1),
+    x: spring(385 ,{stiffness: 120, damping: 17}),
+    opacity: spring(0),
 }
 class App extends Component {
   constructor(props){
@@ -44,11 +44,13 @@ class App extends Component {
     this.__handleChange = this.__handleChange.bind(this);
     this.__storeValue = this.__storeValue.bind(this);
     this.__clearAll = this.__clearAll.bind(this);
+    this.__handleAnimationEnd = this.handleAnimationEnd.bind(this);
   }
-  componentDidMount(){
-    console.log(finalStyle.x.damping);
-        console.log(finalStyle.x.val);
-  }
+  componentDidMount() {
+   //const height = document.getElementByClass('container').clientHeight;
+   //console.log(height);
+ }
+
   __storeValue(event){
     if (event.key === 'Enter' && event.target.value.length > 0) {
       let newItem= {
@@ -106,11 +108,14 @@ class App extends Component {
     });
   }
   __clearAll(){
-
     this.setState({
       dismissed: true,
       completedTasks: 0,
-      //todoList: [],
+    })
+  }
+  handleAnimationEnd () {
+    this.setState({
+      todoList: []
     })
   }
   render() {
@@ -118,12 +123,13 @@ class App extends Component {
     let renderList = todoList.map((item) => {
       return <Motion defaultStyle={initialStyle}
                             style={dismissed? finalStyle : initialStyle }
+                            onRest={this.__handleAnimationEnd}
                             key={item.key}>
                         {
                                 (interpolatedStyle) => (
-                        <TodoView key={item.key} todoValue={item.content} checkedValue={item.checkedValue} unique={item.key} styleObject={{
+                        <TodoView key={item.key} todoValue={item.content} checkedValue={item.checkedValue} uniqueKey={item.key} styleObject={{
                                             transform: `translateX(${interpolatedStyle.x}px)`,
-                                            opacity: interpolatedStyle.opacity
+                                            opacity: interpolatedStyle.opacity,
                                         }} handleChange={this.__handleChangeChecked.bind(this,item.checkedValue,item.key)} removeTodo={this.__removeTodo.bind(this,item.key)}/>
       )}
       </Motion>
@@ -150,7 +156,7 @@ class App extends Component {
               <div className="App-Empty">
                 <img src={happy} alt="face happy"/>
                 <p>Nothing to do! </p>
-              </div>     
+              </div>
             }
           </CardContent>
         </Card>
