@@ -7,6 +7,14 @@
   align-items: center;
   justify-content: flex-start;
 }
+.Card{
+  width: 400px;
+  margin-bottom: 40px;
+  overflow: unset;
+}
+.Clear{
+  margin: 0 auto;
+}
 .App-Empty{
 	display: flex;
   flex-direction: column;
@@ -24,4 +32,9 @@
 }
 .listView .listView-delete:hover{
   opacity: 1;
+}
+@media only screen and (max-width: 600px) {
+  .Card{
+    width: 90%;
+  }
 }

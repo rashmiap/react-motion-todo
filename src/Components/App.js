@@ -13,16 +13,6 @@ import clearAll from '../Images/clear-all.svg';
 import happy from '../Images/happy.svg';
 import { Motion, spring } from 'react-motion';
 
-const styles = {
-  card: {
-    width: 400,
-    marginBottom: '40px',
-    overflow: 'unset',
-  },
-  clear: {
-    margin: '0 auto'
-  }
-};
 const initialStyle = {
     x: 0,
     opacity: 1,
@@ -131,7 +121,7 @@ class App extends Component {
     return (
     <div className="App">
       <Title heading="Todo"/>
-        <Card style={styles.card}>
+        <Card className="Card">
           <CardContent>
             <TodoForm placeholderText="New Todo" inputValue={inputValue} handleChange={this.__handleChange} addTodo={this.__storeValue} />
               {
@@ -142,7 +132,7 @@ class App extends Component {
                     {renderList}
                   </FormGroup>
                    <CardActions>
-                <Button size="small" onClick={this.__clearAll} style={styles.clear}>
+                <Button size="small" onClick={this.__clearAll} className="Clear">
                   <img src={clearAll} alt="clear all" />
                 </Button>
               </CardActions>
