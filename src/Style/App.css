@@ -1,0 +1,27 @@
+.App {
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: #e8d1da;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.App-Empty{
+	display: flex;
+  flex-direction: column;
+  padding: 1em;
+  align-items: center;
+}
+.App-Empty img{
+	width: 4em;
+}
+.listView-checked > span{
+  text-decoration: line-through;
+}
+.listView .listView-delete{
+    opacity: 0.2;
+}
+.listView .listView-delete:hover{
+  opacity: 1;
+}
