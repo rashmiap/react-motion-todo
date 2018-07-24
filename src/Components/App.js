@@ -46,11 +46,6 @@ class App extends Component {
     this.__clearAll = this.__clearAll.bind(this);
     this.__handleAnimationEnd = this.handleAnimationEnd.bind(this);
   }
-  componentDidMount() {
-   //const height = document.getElementByClass('container').clientHeight;
-   //console.log(height);
- }
-
   __storeValue(event){
     if (event.key === 'Enter' && event.target.value.length > 0) {
       let newItem= {
@@ -88,7 +83,6 @@ class App extends Component {
     this.setState({
       todoList: updateList,
       completedTasks: counter,
-      a: false,
     })
   };
   __removeTodo(id){
