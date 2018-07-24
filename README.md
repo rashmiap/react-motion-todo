@@ -3,6 +3,7 @@
 -
 Playing around with [React-motion](https://github.com/chenglou/react-motion). 
 This is a simple responsive Todo app.
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Demo
