@@ -47,7 +47,7 @@ class App extends Component {
         inputValue: '',
         dismissed: false,
       })
-      this.setState((prevState) =>{
+      this.setState(prevState =>{
       return{
         todoList:prevState.todoList.concat(newItem)
         };
