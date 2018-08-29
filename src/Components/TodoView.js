@@ -47,6 +47,6 @@ TodoView.propTypes = {
 	todoValue: PropTypes.string,
 	checkedValue: PropTypes.bool,
 	handleChange: PropTypes.func,
-  removeTodo: PropTypes.func,
-  styleObject: PropTypes.object,
+	removeTodo: PropTypes.func,
+	styleObject: PropTypes.object,
 }
