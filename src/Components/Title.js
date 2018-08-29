@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Title = ({heading}) => {
+const Title = heading => {
   return (
     <div>
         <h3>{heading}</h3>
